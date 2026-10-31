@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UniManage Admissions CRM — System &amp; Workflow Guide</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: #17213b; background: #e8edf5; font: 10pt/1.48 -apple-system, BlinkMacSystemFont, "Noto Sans Devanagari", "Kohinoor Devanagari", Arial, sans-serif; }
+  .page { width: 210mm; height: 297mm; margin: 8mm auto; padding: 15mm 16mm 16mm; overflow: hidden; position: relative; background: white; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .topline { color: #6774d7; font-size: 8pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  h1 { font-size: 25pt; line-height: 1.18; letter-spacing: -.025em; margin: 3mm 0 3mm; }
+  h2 { color: #18244a; font-size: 16pt; line-height: 1.25; margin: 0 0 3mm; }
+  h3 { font-size: 11pt; margin: 0 0 1.5mm; }
+  p { margin: 0 0 3mm; }
+  .muted { color: #6d7890; }
+  .small { font-size: 8.5pt; }
+  .tiny { font-size: 7.5pt; }
+  .brand { display: flex; align-items: center; gap: 3mm; font-size: 13pt; font-weight: 750; }
+  .logo { display: inline-flex; height: 10mm; width: 10mm; align-items: center; justify-content: center; border-radius: 3mm; background: #5868e7; color: white; font-size: 15pt; }
+  .hero { border-radius: 5mm; background: linear-gradient(140deg, #17234a, #4355bd 80%, #6975e9); color: white; padding: 11mm; margin-top: 20mm; }
+  .hero h1 { font-size: 31pt; max-width: 150mm; margin-top: 6mm; }
+  .hero p { color: #e0e5ff; max-width: 145mm; font-size: 12pt; }
+  .hero .kicker { color: #bdc5ff; font-size: 8pt; font-weight: 700; letter-spacing: .15em; }
+  .cover-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin-top: 13mm; }
+  .cover-stat { border: 1px solid #e6eaf2; border-radius: 3mm; padding: 4mm; }
+  .cover-stat strong { display: block; font-size: 15pt; }
+  .cover-stat span { color: #77829a; font-size: 8pt; }
+  .cover-note { background: #f2f4ff; border-left: 1mm solid #5868e7; border-radius: 2mm; margin-top: 12mm; padding: 4mm 5mm; }
+  .footer { position: absolute; bottom: 7mm; left: 16mm; right: 16mm; display: flex; justify-content: space-between; border-top: 1px solid #e8ebf2; padding-top: 2mm; color: #8a94a8; font-size: 7.5pt; }
+  .section-head { margin: 2mm 0 5mm; }
+  .callout { padding: 3.5mm 4mm; background: #f3f5ff; border: 1px solid #e3e7ff; border-radius: 3mm; margin: 3mm 0; }
+  .callout.warn { background: #fff7e9; border-color: #f3e5c4; }
+  .flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2mm; margin: 5mm 0; align-items: stretch; }
+  .step { border: 1px solid #e1e6f0; border-top: 1.3mm solid #5868e7; border-radius: 2.5mm; padding: 3mm 2mm; min-height: 24mm; text-align: center; }
+  .step:nth-child(4) { border-top-color: #8b66c8; }
+  .step:nth-child(5) { border-top-color: #36a276; }
+  .step:nth-child(6) { border-top-color: #adb4c1; }
+  .step strong { display: block; font-size: 9pt; }
+  .step span { color: #77829a; font-size: 7.5pt; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+  .card { border: 1px solid #e6eaf2; border-radius: 3mm; padding: 4mm; margin-bottom: 3mm; }
+  .card.purple { background: #f4f4ff; border-color: #e5e6ff; }
+  .card.green { background: #f0faf5; border-color: #dceddf; }
+  .card.amber { background: #fff8ec; border-color: #f1e7d0; }
+  .card.blue { background: #f3f7ff; border-color: #e2eafa; }
+  ul, ol { margin: 1mm 0 3mm; padding-left: 5mm; }
+  li { margin: 1.3mm 0; }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding-left: 5mm; position: relative; }
+  .checklist li:before { content: "✓"; position: absolute; left: 0; color: #23885c; font-weight: 700; }
+  .route { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: #5362cd; font-size: 8pt; }
+  .diagram { border: 1px solid #e5e9f1; background: #fafbfe; border-radius: 3mm; padding: 5mm; margin: 3mm 0 5mm; }
+  .archrow { display: flex; align-items: center; justify-content: center; gap: 3mm; margin: 2.5mm 0; }
+  .archbox { flex: 1; text-align: center; background: white; border: 1px solid #dfe5f0; border-radius: 2mm; padding: 3mm 2mm; }
+  .arrow { color: #6371d8; font-weight: 800; font-size: 15pt; }
+  .schema { border-collapse: collapse; width: 100%; font-size: 8pt; }
+  .schema th, .schema td { text-align: left; vertical-align: top; border-bottom: 1px solid #e7ebf2; padding: 2mm 2.5mm; }
+  .schema th { background: #f5f6fb; color: #55617c; }
+  .pill { display: inline-block; padding: 1mm 2mm; margin: .5mm; border-radius: 99px; background: #eef0ff; color: #4656c1; font-size: 7.5pt; font-weight: 700; }
+  .code { padding: 3mm 4mm; border-radius: 2mm; background: #111a36; color: #e7eaff; font: 8pt/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; margin: 2mm 0 4mm; }
+  .toc { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 5mm; }
+  .toc span { padding: 2mm 0; border-bottom: 1px solid #edf0f5; }
+  .tag { background: #e9f6ef; color: #278057; display: inline-block; border-radius: 99px; padding: 1mm 2mm; font-size: 7.5pt; font-weight: 700; }
+  @media print { body { background: white; } .page { margin: 0; box-shadow: none; } }
+</style>
+</head>
+<body>
+<section class="page">
+  <div class="brand"><span class="logo">U</span> UniManage <span class="muted small">Admissions CRM</span></div>
+  <div class="hero">
+    <div class="kicker">SYSTEM GUIDE · WORKFLOW · ARCHITECTURE</div>
+    <h1>Student inquiry se university admission tak</h1>
+    <p>UniManage Admissions CRM ko kaise chalana hai, lead ka flow kya hai, aur system ke andar kaun sa hissa kis kaam aata hai — iska simple guide.</p>
+    <div style="margin-top:8mm;color:#dce1ff;font-size:9pt">Counseling team · Admin · University records</div>
+  </div>
+  <div class="cover-grid">
+    <div class="cover-stat"><strong>6 stages</strong><span>Inquiry se enrollment tak pipeline</span></div>
+    <div class="cover-stat"><strong>2 work roles</strong><span>Admin aur counselor (Faculty)</span></div>
+    <div class="cover-stat"><strong>1 timeline</strong><span>Har call, message aur counseling note</span></div>
+  </div>
+  <div class="cover-note"><strong>Is guide mein:</strong> daily workflow, screens, user permissions, database structure, setup, testing aur common errors ke solutions.</div>
+  <p class="muted small" style="margin-top:10mm">Project: CodeIgniter 4 · PHP 8.2+ · MySQL · Document version: 28 October 2026</p>
+  <div class="footer"><span>UniManage Admissions CRM — User &amp; System Guide</span><span>01</span></div>
+</section>
+
+<section class="page">
+  <div class="topline">01 · System ka basic flow</div>
+  <div class="section-head"><h1>Lead ka safar</h1><p class="muted">Student pehli baar inquiry karta hai. Team uski need samajhti hai, sahi university/program suggest karti hai, aur application/enrollment tak follow-up karti hai.</p></div>
+  <div class="flow">
+    <div class="step"><strong>New</strong><span>Nayi inquiry</span></div>
+    <div class="step"><strong>Contacted</strong><span>Pehli baat</span></div>
+    <div class="step"><strong>Counseling</strong><span>Options samjhana</span></div>
+    <div class="step"><strong>Application</strong><span>Apply karna</span></div>
+    <div class="step"><strong>Enrolled</strong><span>Admission confirm</span></div>
+    <div class="step"><strong>Lost</strong><span>Aage nahi badha</span></div>
+  </div>
+  <div class="split">
+    <div class="card purple">
+      <h3>Team ka har step</h3>
+      <ol>
+        <li>Lead aaya — website, referral, social, walk-in ya education fair se.</li>
+        <li>Naam/phone aur jo study details maloom hon, record karo.</li>
+        <li>Lead kisi counselor ko assign karo; next follow-up ki date set karo.</li>
+        <li>Student se baat ke baad profile timeline mein update likho.</li>
+        <li>Progress ke hisaab se stage update karo; agla reminder bhoolo mat.</li>
+      </ol>
+    </div>
+    <div class="card green">
+      <h3>CRM kya sambhalta hai?</h3>
+      <ul class="checklist">
+        <li>Har inquiry ki ek searchable profile.</li>
+        <li>Counselor ownership aur student preferences.</li>
+        <li>Upcoming aur overdue follow-up ki list.</li>
+        <li>Stage change aur conversation history.</li>
+        <li>Dashboard par pipeline counts aur recent leads.</li>
+      </ul>
+    </div>
+  </div>
+  <h2 style="margin-top:4mm">Daily use ka seedha tareeqa</h2>
+  <div class="tri">
+    <div class="card"><h3>Subah</h3><p class="small muted">Dashboard par overdue aur aaj ke follow-ups dekho. Apni lead list filter karo.</p></div>
+    <div class="card"><h3>Har conversation ke baad</h3><p class="small muted">Call/email/WhatsApp/counseling ka chhota, useful note timeline mein likho.</p></div>
+    <div class="card"><h3>Din ke aakhir mein</h3><p class="small muted">Stage aur next follow-up check karo. Kisi active lead ko bina next action mat chhodo.</p></div>
+  </div>
+  <div class="callout"><strong>Yaad rakhein:</strong> Lead mein email, city aur course preference optional hain. Pehli call se pehle jo details nahi milin, unki wajah se inquiry save karna na rokein.</div>
+  <div class="footer"><span>Workflow overview · Stages CRM mein isi naam se dikhte hain</span><span>02</span></div>
+</section>
+
+<section class="page">
+  <div class="topline">02 · Screen-by-screen istemal</div>
+  <div class="section-head"><h1>App ko kaise chalayein</h1><p class="muted">Login ke baad admin aur counselor ko admissions workspace dikhta hai.</p></div>
+  <div class="card blue">
+    <h3>1. Login aur overview</h3>
+    <p class="small">Team account se sign in karein. Dashboard par total leads, new inquiries, counseling mein leads, applications, enrolled students aur overdue reminders ka count hota hai. Neeche follow-up queue aur recently added leads dekhein.</p>
+    <span class="route">/login</span> → <span class="route">/dashboard</span>
+  </div>
+  <div class="card purple">
+    <h3>2. Lead add karna</h3>
+    <p class="small"><strong>Add a lead</strong> par click karke required student name aur phone bharein. Email, city/country, study level, program, preferred university, intake aur counselor notes optional hain. Lead source, pipeline stage, counselor aur follow-up choose karke save karein.</p>
+    <p class="small"><strong>Lead source:</strong> Website · Referral · Social · Walk-in · Education fair · Other</p>
+    <span class="route">/leads/create</span> → save ke baad student profile
+  </div>
+  <div class="card amber">
+    <h3>3. Lead dhoondhna / filter karna</h3>
+    <p class="small">Leads list mein naam, phone, email, program ya university se search karein. Stage, source aur assigned counselor ke filters ek saath use kar sakte hain. Student row se poori profile khulti hai.</p>
+    <span class="route">/leads</span>
+  </div>
+  <div class="card green">
+    <h3>4. Profile, update aur timeline</h3>
+    <p class="small">Profile par phone/email, study interest, intake, source, current counselor aur next follow-up dekhein. <strong>Edit lead</strong> se stage, ownership, preferences aur reminder badlein. Timeline mein Call, Email, WhatsApp, Counseling, Application ya Other type ke saath note add karein.</p>
+    <span class="route">/leads/profile/{id}</span> · <span class="route">/leads/edit/{id}</span>
+  </div>
+  <div class="card">
+    <h3>5. Stage kab badlein?</h3>
+    <div class="split small">
+      <div><p><strong>New → Contacted:</strong> student se pehli baar baat/message ho gaya.</p><p><strong>Contacted → Counseling:</strong> student ke goals/eligibility par guidance shuru ho gayi.</p><p><strong>Counseling → Application:</strong> student ne application process shuru kar diya.</p></div>
+      <div><p><strong>Application → Enrolled:</strong> university admission confirm hai.</p><p><strong>Kisi bhi active stage → Lost:</strong> student aage nahi badh raha; context note karein.</p><p>Stage change profile timeline mein record hota hai.</p></div>
+    </div>
+  </div>
+  <div class="callout warn"><strong>Reminder:</strong> Follow-up date/time set karna reminder queue ko kaam ka banata hai. CRM reminder dikhata hai; email/WhatsApp notification khud se send nahi karta.</div>
+  <div class="footer"><span>UI aur route guide · Profile pages authenticated users ke liye</span><span>03</span></div>
+</section>
+
+<section class="page">
+  <div class="topline">03 · Roles, modules aur permissions</div>
+  <div class="section-head"><h1>Kaun kya kar sakta hai</h1><p class="muted">Admin aur counselor admissions workflow sambhalte hain. Baaki roles existing university records modules ke liye rakhe gaye hain.</p></div>
+  <table class="schema">
+    <thead><tr><th>Role</th><th>Admissions CRM</th><th>Existing university areas</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Admin</strong></td><td>Leads dekhna, banana, edit, assign, timeline update</td><td>Students, departments, courses, subjects, faculty, attendance, timetable</td></tr>
+      <tr><td><strong>Faculty / Counselor</strong></td><td>Leads dekhna, banana, edit, timeline update; assignment options mein faculty/admin accounts</td><td>Academic records, faculty list, attendance aur timetable access (route ke mutabik)</td></tr>
+      <tr><td><strong>Student</strong></td><td>Admissions pipeline access nahi</td><td>Student profile ki limited route access</td></tr>
+      <tr><td><strong>Accountant</strong></td><td>Admissions pipeline access nahi</td><td>Student directory access</td></tr>
+    </tbody>
+  </table>
+  <div class="callout" style="margin-top:4mm"><strong>Security:</strong> login session + role filters ke peeche protected routes hain. Forms par CSRF protection hai. Mutating actions POST use karte hain; student status change aur logout GET link nahi hain.</div>
+  <h2 style="margin-top:5mm">Workspace screens</h2>
+  <div class="split">
+    <div>
+      <div class="card"><h3>Admissions workspace</h3><p class="small"><span class="route">/dashboard</span> — real database metrics + follow-up list</p><p class="small"><span class="route">/leads</span> — search, filters, pipeline overview</p><p class="small"><span class="route">/leads/create</span> — nayi inquiry</p><p class="small"><span class="route">/leads/profile/{id}</span> — detail + activity timeline</p><p class="small"><span class="route">/leads/edit/{id}</span> — stage, owner aur next step</p></div>
+      <div class="card"><h3>University records</h3><p class="small">Students, departments, courses, subjects, faculty, attendance report/logs aur class timetable existing modules mein hain.</p></div>
+    </div>
+    <div>
+      <div class="card"><h3>Role se route protection</h3><p class="small">Admin/counselor ke CRM route par auth + role filters. Admin-only academic writes, jaise department/course/subject create aur faculty create.</p></div>
+      <div class="card"><h3>Data privacy</h3><p class="small">Student name/contact aur counselor notes sensitive operational data hain. Har counselor ko apne kaam ke liye zaroori access hi dein. Shared/demo account ki jagah alag staff accounts banayein.</p></div>
+    </div>
+  </div>
+  <h2 style="margin-top:4mm">Lead form ke fields</h2>
+  <p><span class="pill">Required: student_name</span><span class="pill">Required: phone</span><span class="pill">Source</span><span class="pill">Stage</span><span class="pill">Counselor</span><span class="pill">Follow-up</span></p>
+  <p><span class="pill">Optional: email</span><span class="pill">City / Country</span><span class="pill">Study level</span><span class="pill">Program</span><span class="pill">University</span><span class="pill">Intake</span><span class="pill">Notes</span></p>
+  <div class="footer"><span>Access role ke hisaab se restrict hota hai; team onboarding admin kare</span><span>04</span></div>
+</section>
+
+<section class="page">
+  <div class="topline">04 · Application ka internal structure</div>
+  <div class="section-head"><h1>System ke andar ka map</h1><p class="muted">CodeIgniter MVC pattern: route request ko controller tak bhejta hai, model database se baat karta hai, aur view browser screen banata hai.</p></div>
+  <div class="diagram">
+    <div class="archrow"><div class="archbox"><strong>Browser / UI</strong><br><span class="small muted">Dashboard · Leads · Profile</span></div></div>
+    <div class="archrow"><span class="arrow">↓</span></div>
+    <div class="archrow"><div class="archbox"><strong>Routes + Filters</strong><br><span class="small muted">Auth · Role · CSRF</span></div></div>
+    <div class="archrow"><span class="arrow">↓</span></div>
+    <div class="archrow"><div class="archbox"><strong>Controllers</strong><br><span class="small muted">Dashboard · Leads · Attendance · Academic modules</span></div></div>
+    <div class="archrow"><span class="arrow">↓</span></div>
+    <div class="archrow"><div class="archbox"><strong>Models</strong><br><span class="small muted">LeadModel · LeadActivityModel · UserModel</span></div><span class="arrow">↔</span><div class="archbox"><strong>MySQL</strong><br><span class="small muted">Validation · Transactions · Audit log</span></div></div>
+    <div class="archrow"><span class="arrow">↓</span></div>
+    <div class="archrow"><div class="archbox"><strong>Views</strong><br><span class="small muted">HTML screens · shared layout · responsive navigation</span></div></div>
+  </div>
+  <table class="schema">
+    <thead><tr><th>Layer</th><th>Project location</th><th>Kaam</th></tr></thead>
+    <tbody>
+      <tr><td>Routes</td><td>app/Config/Routes.php</td><td>URL, HTTP method aur role access</td></tr>
+      <tr><td>Controllers</td><td>app/Controllers/</td><td>Request validation, workflow aur response</td></tr>
+      <tr><td>Models</td><td>app/Models/</td><td>Lead queries, dashboard counts, activity history</td></tr>
+      <tr><td>Views</td><td>app/Views/</td><td>Dashboard, forms, list, profile, shared layout</td></tr>
+      <tr><td>Schema</td><td>app/Database/Migrations/</td><td>Versioned database tables and relations</td></tr>
+      <tr><td>Roles/seed</td><td>app/Database/Seeds/</td><td>Initial demo roles, users, academic reference data</td></tr>
+    </tbody>
+  </table>
+  <h2 style="margin-top:5mm">CRM database</h2>
+  <table class="schema">
+    <thead><tr><th>Table</th><th>Important fields</th><th>Relation</th></tr></thead>
+    <tbody>
+      <tr><td><strong>admissions_leads</strong></td><td>student_name, email, phone, country/city, program, university, intake, source, status, assigned_to, created_by, next_follow_up, notes, timestamps, deleted_at</td><td>assigned_to / created_by → users.id</td></tr>
+      <tr><td><strong>lead_activities</strong></td><td>lead_id, user_id, activity_type, details, created_at</td><td>lead_id → admissions_leads.id; user_id → users.id</td></tr>
+      <tr><td><strong>users / roles</strong></td><td>Staff account, email, status, role</td><td>Lead counselor aur activity author identify karte hain</td></tr>
+    </tbody>
+  </table>
+  <div class="callout small"><strong>Implementation note:</strong> Enrolled students ke liye existing <em>students</em> record module alag hai. CRM lead ko enrolled student table mein convert karne ka automated handoff abhi roadmap mein hai.</div>
+  <div class="footer"><span>Database migration: CreateAdmissionsLeadsTables · soft-delete lead records</span><span>05</span></div>
+</section>
+
+<section class="page">
+  <div class="topline">05 · Install, run aur troubleshoot</div>
+  <div class="section-head"><h1>Setup checklist</h1><p class="muted">Pehli baar chala rahe hain to in steps ko isi order mein follow karein.</p></div>
+  <div class="card">
+    <h3>Requirements</h3>
+    <ul class="checklist small">
+      <li>PHP 8.2 ya newer; project Composer/CodeIgniter 4 use karta hai.</li>
+      <li>PHP extensions: intl, mbstring, MySQLi (MySQL use karte waqt).</li>
+      <li>MySQL service on ho aur `.env` mein database connection sahi ho.</li>
+      <li>Apache use karte waqt web root project ke `public/` folder par point kare.</li>
+    </ul>
+  </div>
+  <h2>Local development</h2>
+  <div class="code"># 1. Project root mein env file copy karke values set karein
+cp env .env
+
+# 2. .env mein app.baseURL aur database.default.* set karein
+# 3. Database pehle create karein
+php spark migrate
+php spark db:seed InitialSeeder
+
+# 4. Local server
+php spark serve --host 127.0.0.1 --port 8080
+
+# 5. Browser
+http://localhost:8080/</div>
+  <div class="card amber">
+    <h3>Is workspace ki current status</h3>
+    <p class="small">CRM schema configured MySQL database par migrate ho chuki hai. Local PHP CLI 8.5 par app verify hua. XAMPP Apache PHP 8.0.28 chala raha hai; CodeIgniter 4.7.5 ke liye PHP 8.2+ chahiye. Isliye XAMPP se chalane ke liye Apache PHP upgrade karein, ya development ke liye upar diya `php spark serve` command use karein.</p>
+  </div>
+  <h2 style="margin-top:4mm">Common issue → kya karein</h2>
+  <table class="schema">
+    <thead><tr><th>Message / problem</th><th>Solution</th></tr></thead>
+    <tbody>
+      <tr><td>“PHP 8.2 or higher” / HTTP 503</td><td>Active PHP check karein: terminal mein <code>php -v</code>; XAMPP Apache ka PHP version bhi 8.2+ hona chahiye.</td></tr>
+      <tr><td>“admissions_leads doesn't exist”</td><td>Sahi `.env` database select karke `php spark migrate` run karein; `php spark migrate:status` se check karein.</td></tr>
+      <tr><td>Page login par redirect / DB connect error</td><td>MySQL start karein; `.env` host, database, user, password/port check karein. Secrets ko source control mein save na karein.</td></tr>
+      <tr><td>Wrong host/port ya redirect</td><td>Browser URL ko `.env` `app.baseURL` se match karein (scheme, host, port). Pretty URLs ke liye `indexPage` empty aur rewrite enabled ho.</td></tr>
+      <tr><td>Apache par route not found</td><td>`public/` document root, `mod_rewrite`, `AllowOverride All` aur `public/.htaccess` verify karein.</td></tr>
+      <tr><td>Login successful, dashboard error</td><td>Database migrated ho aur admin/counselor user exist karta ho. Error details `writable/logs/` mein dekhein.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><strong>Demo users:</strong> `InitialSeeder` sample accounts banata hai. Deployment se pehle passwords badlein; sample credentials public/production mein use na karein.</div>
+  <div class="footer"><span>Testing: vendor/bin/phpunit --no-coverage · Logs: writable/logs/</span><span>06</span></div>
+</section>
+
+<section class="page">
+  <div class="topline">06 · Abhi kya hai aur agla kya</div>
+  <div class="section-head"><h1>Project ki current boundaries</h1><p class="muted">Yeh guide current application ke implemented flow ko document karti hai; roadmap features ko available feature samajh kar plan na karein.</p></div>
+  <div class="split">
+    <div class="card green">
+      <h3>Abhi available</h3>
+      <ul class="checklist small">
+        <li>Admin/counselor authenticated admissions CRM.</li>
+        <li>Lead intake, edit, search aur stage/source/owner filters.</li>
+        <li>Counselor assignment aur student preference fields.</li>
+        <li>Follow-up date/time, overdue dashboard count aur queue.</li>
+        <li>Lead profile, stage-change history aur activity timeline.</li>
+        <li>Dashboard, responsive navigation aur existing academic screens.</li>
+        <li>Lead soft delete schema, CSRF protected forms, audit logging.</li>
+      </ul>
+    </div>
+    <div class="card amber">
+      <h3>Abhi included nahi</h3>
+      <ul class="small">
+        <li>Partner universities/programs ka searchable catalog.</li>
+        <li>Public website form ya external CRM lead API.</li>
+        <li>CSV lead import, deduplication aur campaign attribution.</li>
+        <li>Automatic WhatsApp/email reminders.</li>
+        <li>Application documents/checklists aur deadlines.</li>
+        <li>Enrolled lead se student record ka automatic conversion.</li>
+        <li>Advanced counselor conversion/response-time analytics.</li>
+      </ul>
+    </div>
+  </div>
+  <h2 style="margin-top:5mm">Recommended build order</h2>
+  <div class="card"><strong>Phase A — Team setup:</strong> Individual staff accounts, secure password reset/change, role assignment aur counselor workload controls.</div>
+  <div class="card"><strong>Phase B — University catalog:</strong> Partner university, location, program, eligibility, fee, intake aur deadline records; counselor ko verified options dikhana.</div>
+  <div class="card"><strong>Phase C — Intake:</strong> Website form / approved import, consent, spam checks, duplicate detection aur source attribution.</div>
+  <div class="card"><strong>Phase D — Application:</strong> Document checklist, application milestones/deadlines, status reporting aur enrolled lead ka student record se safe linkage.</div>
+  <div class="card"><strong>Phase E — Automation &amp; analytics:</strong> Approved email/WhatsApp provider integration, scheduled reminders, delivery logs aur conversion reporting.</div>
+  <div class="callout"><strong>Operational recommendation:</strong> Production se pehle real backup/restore test, private credentials, HTTPS, staff training, privacy/consent process aur admission-stage definitions approve karein.</div>
+  <p class="muted small" style="margin-top:7mm">Guide codebase ke current routes, screens, migrations aur setup instructions ke mutabik likhi gayi hai. UI label translation aur deployment details server configuration ke hisaab se badal sakte hain.</p>
+  <div class="footer"><span>UniManage Admissions CRM · Internal product and workflow reference</span><span>07</span></div>
+</section>
+</body>
+</html>
